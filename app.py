@@ -35,12 +35,14 @@ df_inei = cargar_datos()
 st.sidebar.markdown("### 📋 Datos Base Disponibles:")
 st.sidebar.dataframe(df_inei.head(15), height=300)
 
-# Selector directo de distritos
-st.markdown("### 🎯 Selección de Distrito para Análisis")
-lista_distritos = sorted(df_inei['Distrito'].unique().tolist())
-distrito_seleccionado = st.selectbox(
-    "Selecciona un distrito específico de Lima Metropolitana:",
-    ["Todos los distritos"] + lista_distritos
+# --- NUEVO: SELECTOR MÚLTIPLE PARA COMPARACIÓN DE DISTRITOS ---
+st.markdown("### 🎯 Comparativa Multi-Distrito")
+lista_distritos = sorted([d for d in df_inei['Distrito'].unique() if d != "Lima (Promedio)"])
+
+distritos_seleccionados = st.multiselect(
+    "Selecciona dos o más distritos para comparar:",
+    options=lista_distritos,
+    default=["San Luis", "San Borja", "Miraflores"]  # Selección inicial por defecto para que luzca lleno al cargar
 )
 
 consulta_rapida = st.selectbox(
@@ -65,37 +67,30 @@ if st.button("Ejecutar Análisis Estadístico IA"):
     st.markdown("---")
     st.markdown("### 📋 Resultados del Análisis Estadístico")
     
-    # Filtrado inteligente por selector y texto
-    if distrito_seleccionado != "Todos los distritos":
-        df_filtrado = df_inei[df_inei['Distrito'] == distrito_seleccionado]
-        st.success(f"🎯 Análisis filtrado exclusivamente para el distrito de: **{distrito_seleccionado}**")
+    # Filtrar según los distritos seleccionados en el multiselect
+    if distritos_seleccionados:
+        df_filtrado = df_inei[df_inei['Distrito'].isin(distritos_seleccionados)]
+        st.success(f"🎯 Comparativa activa para los distritos: **{', '.join(distritos_seleccionados)}**")
     else:
-        consulta_lower = consulta_personalizada.lower()
-        distritos_encontrados = [d for d in df_inei['Distrito'].unique() if d.lower() in consulta_lower]
-        
-        if distritos_encontrados:
-            df_filtrado = df_inei[df_inei['Distrito'].isin(distritos_encontrados)]
-            st.success(f"🎯 Filtrado inteligente aplicado para: **{', '.join(distritos_encontrados)}**")
-        else:
-            df_filtrado = df_inei
-            st.info("ℹ️ Mostrando el consolidado general de los distritos registrados.")
+        # Si no elige ninguno, toma por defecto un par o todo el general
+        df_filtrado = df_inei[df_inei['Distrito'].isin(["San Luis", "San Borja"])]
+        st.warning("⚠️ No seleccionaste ningún distrito. Mostrando comparación predeterminada (San Luis y San Borja).")
 
     st.markdown("#### 🔍 Diagnóstico Rápido")
-    st.markdown(f"- **Indicador / Consulta Analizada:** {consulta_personalizada if consulta_personalizada else f'Evaluación integral para {distrito_seleccionado}.'}")
+    st.markdown(f"- **Indicador / Consulta Analizada:** {consulta_personalizada if consulta_personalizada else 'Evaluación comparativa multi-distrito.'}")
     st.markdown("- **Registros institucionales obtenidos:**")
     
     # Mostrar la tabla filtrada
     st.dataframe(df_filtrado, use_container_width=True)
     
-    # --- GRÁFICOS ESTADÍSTICOS INTEGRADOS ---
-    st.markdown("#### 📈 Visualización Gráfica de Indicadores")
+    # --- GRÁFICOS COMPARATIVOS AVANZADOS ---
+    st.markdown("#### 📈 Visualización Comparativa de Indicadores")
     if not df_filtrado.empty:
-        # Creamos una tabla pivote para graficar de forma limpia si hay valores numéricos
         try:
-            df_chart = df_filtrado.pivot(index='Distrito', columns='Indicador', values='Valor')
-            st.bar_chart(df_chart)
+            # Transformamos los datos en una tabla cruzada (pivote) para que el gráfico de barras compare perfectamente por indicador
+            df_pivot = df_filtrado.pivot(index='Distrito', columns='Indicador', values='Valor')
+            st.bar_chart(df_pivot)
         except Exception:
-            # Gráfico alternativo directo si la estructura varía
             st.bar_chart(df_filtrado.set_index('Distrito')['Valor'])
     
     st.success("✅ Análisis procesado con éxito bajo los parámetros y proyecciones del INEI.")
