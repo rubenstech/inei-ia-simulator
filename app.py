@@ -35,7 +35,7 @@ df_inei = cargar_datos()
 st.sidebar.markdown("### 📋 Datos Base Disponibles:")
 st.sidebar.dataframe(df_inei.head(15), height=300)
 
-# --- NUEVO: SELECTOR DIRECTO DE DISTRITOS ---
+# Selector directo de distritos
 st.markdown("### 🎯 Selección de Distrito para Análisis")
 lista_distritos = sorted(df_inei['Distrito'].unique().tolist())
 distrito_seleccionado = st.selectbox(
@@ -43,7 +43,6 @@ distrito_seleccionado = st.selectbox(
     ["Todos los distritos"] + lista_distritos
 )
 
-# Campo de entrada de consulta por parte del usuario
 consulta_rapida = st.selectbox(
     "O selecciona una consulta rápida:",
     [
@@ -66,12 +65,11 @@ if st.button("Ejecutar Análisis Estadístico IA"):
     st.markdown("---")
     st.markdown("### 📋 Resultados del Análisis Estadístico")
     
-    # --- FILTRADO INTELIGENTE POR SELECTOR Y TEXTO ---
+    # Filtrado inteligente por selector y texto
     if distrito_seleccionado != "Todos los distritos":
         df_filtrado = df_inei[df_inei['Distrito'] == distrito_seleccionado]
         st.success(f"🎯 Análisis filtrado exclusivamente para el distrito de: **{distrito_seleccionado}**")
     else:
-        # Buscar si en el texto de la consulta se menciona algún distrito (incluyendo Lince)
         consulta_lower = consulta_personalizada.lower()
         distritos_encontrados = [d for d in df_inei['Distrito'].unique() if d.lower() in consulta_lower]
         
@@ -86,7 +84,18 @@ if st.button("Ejecutar Análisis Estadístico IA"):
     st.markdown(f"- **Indicador / Consulta Analizada:** {consulta_personalizada if consulta_personalizada else f'Evaluación integral para {distrito_seleccionado}.'}")
     st.markdown("- **Registros institucionales obtenidos:**")
     
-    # Mostrar la tabla filtrada de manera limpia
+    # Mostrar la tabla filtrada
     st.dataframe(df_filtrado, use_container_width=True)
+    
+    # --- GRÁFICOS ESTADÍSTICOS INTEGRADOS ---
+    st.markdown("#### 📈 Visualización Gráfica de Indicadores")
+    if not df_filtrado.empty:
+        # Creamos una tabla pivote para graficar de forma limpia si hay valores numéricos
+        try:
+            df_chart = df_filtrado.pivot(index='Distrito', columns='Indicador', values='Valor')
+            st.bar_chart(df_chart)
+        except Exception:
+            # Gráfico alternativo directo si la estructura varía
+            st.bar_chart(df_filtrado.set_index('Distrito')['Valor'])
     
     st.success("✅ Análisis procesado con éxito bajo los parámetros y proyecciones del INEI.")
