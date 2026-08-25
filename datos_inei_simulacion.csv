@@ -1,4 +1,8 @@
 Anio,Mes,Distrito,Indicador,Valor
+2026,1,Lima (Promedio),Poblacion_Total,10432133
+2026,1,Lima (Promedio),Canasta_Basica_Soles,1250.50
+2026,1,Lima (Promedio),Tasa_Desempleo_Pct,7.2
+2026,1,Lima (Promedio),Pobreza_Monetaria_Pct,18.5
 2026,1,San Luis,Poblacion_Total,54870
 2026,1,San Luis,Canasta_Basica_Soles,1180.00
 2026,1,San Luis,Tasa_Desempleo_Pct,5.8
@@ -23,19 +27,151 @@ Anio,Mes,Distrito,Indicador,Valor
 2026,1,San Borja,Canasta_Basica_Soles,1390.00
 2026,1,San Borja,Tasa_Desempleo_Pct,3.8
 2026,1,San Borja,Pobreza_Monetaria_Pct,1.5
+2026,1,Barranco,Poblacion_Total,37300
+2026,1,Barranco,Canasta_Basica_Soles,1280.00
+2026,1,Barranco,Tasa_Desempleo_Pct,5.2
+2026,1,Barranco,Pobreza_Monetaria_Pct,3.0
+2026,1,Jesús María,Poblacion_Total,82300
+2026,1,Jesús María,Canasta_Basica_Soles,1310.00
+2026,1,Jesús María,Tasa_Desempleo_Pct,4.2
+2026,1,Jesús María,Pobreza_Monetaria_Pct,1.8
+2026,1,Lince,Poblacion_Total,58200
+2026,1,Lince,Canasta_Basica_Soles,1260.00
+2026,1,Lince,Tasa_Desempleo_Pct,4.9
+2026,1,Lince,Pobreza_Monetaria_Pct,2.2
+2026,1,Magdalena del Mar,Poblacion_Total,65400
+2026,1,Magdalena del Mar,Canasta_Basica_Soles,1290.00
+2026,1,Magdalena del Mar,Tasa_Desempleo_Pct,4.5
+2026,1,Magdalena del Mar,Pobreza_Monetaria_Pct,2.0
+2026,1,Pueblo Libre,Poblacion_Total,91400
+2026,1,Pueblo Libre,Canasta_Basica_Soles,1300.00
+2026,1,Pueblo Libre,Tasa_Desempleo_Pct,4.3
+2026,1,Pueblo Libre,Pobreza_Monetaria_Pct,1.7
+2026,1,San Miguel,Poblacion_Total,165100
+2026,1,San Miguel,Canasta_Basica_Soles,1270.00
+2026,1,San Miguel,Tasa_Desempleo_Pct,4.7
+2026,1,San Miguel,Pobreza_Monetaria_Pct,2.1
+2026,1,Surquillo,Poblacion_Total,101200
+2026,1,Surquillo,Canasta_Basica_Soles,1190.00
+2026,1,Surquillo,Tasa_Desempleo_Pct,6.1
+2026,1,Surquillo,Pobreza_Monetaria_Pct,4.5
+2026,1,Breña,Poblacion_Total,96100
+2026,1,Breña,Canasta_Basica_Soles,1120.00
+2026,1,Breña,Tasa_Desempleo_Pct,6.8
+2026,1,Breña,Pobreza_Monetaria_Pct,7.5
+2026,1,Cercado de Lima,Poblacion_Total,378400
+2026,1,Cercado de Lima,Canasta_Basica_Soles,1150.00
+2026,1,Cercado de Lima,Tasa_Desempleo_Pct,6.5
+2026,1,Cercado de Lima,Pobreza_Monetaria_Pct,8.1
+2026,1,Rímac,Poblacion_Total,181200
+2026,1,Rímac,Canasta_Basica_Soles,1090.00
+2026,1,Rímac,Tasa_Desempleo_Pct,7.9
+2026,1,Rímac,Pobreza_Monetaria_Pct,12.4
+2026,1,La Victoria,Poblacion_Total,193400
+2026,1,La Victoria,Canasta_Basica_Soles,1110.00
+2026,1,La Victoria,Tasa_Desempleo_Pct,7.5
+2026,1,La Victoria,Pobreza_Monetaria_Pct,10.8
 2026,1,San Juan de Lurigancho,Poblacion_Total,1214000
 2026,1,San Juan de Lurigancho,Canasta_Basica_Soles,980.00
 2026,1,San Juan de Lurigancho,Tasa_Desempleo_Pct,9.1
 2026,1,San Juan de Lurigancho,Pobreza_Monetaria_Pct,21.3
+2026,1,Ate,Poblacion_Total,702800
+2026,1,Ate,Canasta_Basica_Soles,1020.00
+2026,1,Ate,Tasa_Desempleo_Pct,8.4
+2026,1,Ate,Pobreza_Monetaria_Pct,16.8
 2026,1,Comas,Poblacion_Total,577000
 2026,1,Comas,Canasta_Basica_Soles,990.00
 2026,1,Comas,Tasa_Desempleo_Pct,8.9
 2026,1,Comas,Pobreza_Monetaria_Pct,19.2
+2026,1,San Martín de Porres,Poblacion_Total,764100
+2026,1,San Martín de Porres,Canasta_Basica_Soles,1010.00
+2026,1,San Martín de Porres,Tasa_Desempleo_Pct,8.6
+2026,1,San Martín de Porres,Pobreza_Monetaria_Pct,17.4
 2026,1,Los Olivos,Poblacion_Total,421300
 2026,1,Los Olivos,Canasta_Basica_Soles,1080.00
 2026,1,Los Olivos,Tasa_Desempleo_Pct,6.9
 2026,1,Los Olivos,Pobreza_Monetaria_Pct,9.8
+2026,1,Independencia,Poblacion_Total,229700
+2026,1,Independencia,Canasta_Basica_Soles,970.00
+2026,1,Independencia,Tasa_Desempleo_Pct,9.2
+2026,1,Independencia,Pobreza_Monetaria_Pct,22.1
+2026,1,Carabayllo,Poblacion_Total,433600
+2026,1,Carabayllo,Canasta_Basica_Soles,950.00
+2026,1,Carabayllo,Tasa_Desempleo_Pct,9.8
+2026,1,Carabayllo,Pobreza_Monetaria_Pct,26.5
+2026,1,Puente Piedra,Poblacion_Total,438000
+2026,1,Puente Piedra,Canasta_Basica_Soles,960.00
+2026,1,Puente Piedra,Tasa_Desempleo_Pct,9.5
+2026,1,Puente Piedra,Pobreza_Monetaria_Pct,24.8
+2026,1,Santa Rosa,Poblacion_Total,38500
+2026,1,Santa Rosa,Canasta_Basica_Soles,910.00
+2026,1,Santa Rosa,Tasa_Desempleo_Pct,10.5
+2026,1,Santa Rosa,Pobreza_Monetaria_Pct,32.4
+2026,1,Ancón,Poblacion_Total,48200
+2026,1,Ancón,Canasta_Basica_Soles,930.00
+2026,1,Ancón,Tasa_Desempleo_Pct,10.1
+2026,1,Ancón,Pobreza_Monetaria_Pct,29.1
+2026,1,Ventanilla,Poblacion_Total,458000
+2026,1,Ventanilla,Canasta_Basica_Soles,960.00
+2026,1,Ventanilla,Tasa_Desempleo_Pct,9.3
+2026,1,Ventanilla,Pobreza_Monetaria_Pct,23.5
 2026,1,Villa El Salvador,Poblacion_Total,497800
 2026,1,Villa El Salvador,Canasta_Basica_Soles,980.00
 2026,1,Villa El Salvador,Tasa_Desempleo_Pct,8.8
 2026,1,Villa El Salvador,Pobreza_Monetaria_Pct,18.9
+2026,1,Villa María del Triunfo,Poblacion_Total,447900
+2026,1,Villa María del Triunfo,Canasta_Basica_Soles,940.00
+2026,1,Villa María del Triunfo,Tasa_Desempleo_Pct,9.6
+2026,1,Villa María del Triunfo,Pobreza_Monetaria_Pct,25.4
+2026,1,San Juan de Miraflores,Poblacion_Total,425400
+2026,1,San Juan de Miraflores,Canasta_Basica_Soles,990.00
+2026,1,San Juan de Miraflores,Tasa_Desempleo_Pct,8.5
+2026,1,San Juan de Miraflores,Pobreza_Monetaria_Pct,17.1
+2026,1,Chorrillos,Poblacion_Total,357100
+2026,1,Chorrillos,Canasta_Basica_Soles,1050.00
+2026,1,Chorrillos,Tasa_Desempleo_Pct,7.4
+2026,1,Chorrillos,Pobreza_Monetaria_Pct,11.2
+2026,1,Lurín,Poblacion_Total,118900
+2026,1,Lurín,Canasta_Basica_Soles,1020.00
+2026,1,Lurín,Tasa_Desempleo_Pct,8.0
+2026,1,Lurín,Pobreza_Monetaria_Pct,19.5
+2026,1,Pachacámac,Poblacion_Total,158600
+2026,1,Pachacámac,Canasta_Basica_Soles,970.00
+2026,1,Pachacámac,Tasa_Desempleo_Pct,9.4
+2026,1,Pachacámac,Pobreza_Monetaria_Pct,27.0
+2026,1,Pucusana,Poblacion_Total,18900
+2026,1,Pucusana,Canasta_Basica_Soles,950.00
+2026,1,Pucusana,Tasa_Desempleo_Pct,9.0
+2026,1,Pucusana,Pobreza_Monetaria_Pct,24.5
+2026,1,Punta Hermosa,Poblacion_Total,9800
+2026,1,Punta Hermosa,Canasta_Basica_Soles,1210.00
+2026,1,Punta Hermosa,Tasa_Desempleo_Pct,5.0
+2026,1,Punta Hermosa,Pobreza_Monetaria_Pct,8.0
+2026,1,Punta Negra,Poblacion_Total,8700
+2026,1,Punta Negra,Canasta_Basica_Soles,940.00
+2026,1,Punta Negra,Tasa_Desempleo_Pct,9.2
+2026,1,Punta Negra,Pobreza_Monetaria_Pct,26.0
+2026,1,San Bartolo,Poblacion_Total,8500
+2026,1,San Bartolo,Canasta_Basica_Soles,990.00
+2026,1,San Bartolo,Tasa_Desempleo_Pct,7.8
+2026,1,San Bartolo,Pobreza_Monetaria_Pct,18.0
+2026,1,Santa María del Mar,Poblacion_Total,1200
+2026,1,Santa María del Mar,Canasta_Basica_Soles,1600.00
+2026,1,Santa María del Mar,Tasa_Desempleo_Pct,2.5
+2026,1,Santa María del Mar,Pobreza_Monetaria_Pct,0.5
+2026,1,Lurigancho (Chosica),Poblacion_Total,242000
+2026,1,Lurigancho (Chosica),Canasta_Basica_Soles,1000.00
+2026,1,Lurigancho (Chosica),Tasa_Desempleo_Pct,8.3
+2026,1,Lurigancho (Chosica),Pobreza_Monetaria_Pct,19.0
+2026,1,Cieneguilla,Poblacion_Total,55400
+2026,1,Cieneguilla,Canasta_Basica_Soles,1060.00
+2026,1,Cieneguilla,Tasa_Desempleo_Pct,7.1
+2026,1,Cieneguilla,Pobreza_Monetaria_Pct,15.2
+2026,1,El Agustino,Poblacion_Total,228000
+2026,1,El Agustino,Canasta_Basica_Soles,1030.00
+2026,1,El Agustino,Tasa_Desempleo_Pct,8.1
+2026,1,El Agustino,Pobreza_Monetaria_Pct,16.5
+2026,1,Chaclacayo,Poblacion_Total,45200
+2026,1,Chaclacayo,Canasta_Basica_Soles,1100.00
+2026,1,Chaclacayo,Tasa_Desempleo_Pct,6.5
+2026,1,Chaclacayo,Pobreza_Monetaria_Pct,10.2
