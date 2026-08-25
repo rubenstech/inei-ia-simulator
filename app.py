@@ -1,113 +1,87 @@
 import streamlit as st
 import pandas as pd
-import openai
 
+# Configuración de la página
 st.set_page_config(
-    page_title="Asesor Estadístico IA - INEI Lab",
+    page_title="Asesor Estadístico IA | INEI Lab",
     page_icon="📊",
     layout="wide"
 )
 
-# Custom CSS for styling
+# Título y presentación
 st.markdown("""
-<style>
-    .main { background-color: #faf8f5; }
-    h1 { color: #1e3a8a; font-family: 'Helvetica Neue', sans-serif; }
-    .stAlert { background-color: #e0f2fe; border-color: #bae6fd; }
-</style>
+    <div style='display: flex; align-items: center;'>
+        <h1>📊 Asesor Estadístico IA | INEI Lab</h1>
+    </div>
 """, unsafe_allow_html=True)
 
-st.title("📊 Asesor Estadístico IA | INEI Lab")
-st.markdown("### Simulación Interactiva: Retos de la IA con Estadísticas Oficiales")
-st.markdown("Esta herramienta descentralizada permite consultar indicadores socioeconómicos y demográficos simulados bajo estrictos parámetros del INEI, aplicando inteligencia analítica autónoma.")
+st.subheader("Simulación Interactiva: Retos de la IA con Estadísticas Oficiales")
+st.markdown(
+    "Esta herramienta descentralizada permite consultar indicadores socioeconómicos y demográficos simulados bajo estrictos "
+    "parámetros del INEI, aplicando inteligencia analítica autónoma."
+)
 
-# Load dataset
+# Barra lateral para parámetros e inventario de datos
+st.sidebar.markdown("### ⚙️ Parámetros de Simulación")
+st.sidebar.info("Ecosistema SmartWorld AI\nMódulo: Smart Study On Demand")
+
+# Carga de datos oficiales simulados (con caché para velocidad)
 @st.cache_data
-def load_data():
-    return pd.read_csv('datos_inei_simulacion.csv')
+def cargar_datos():
+    return pd.read_csv("datos_inei_simulacion.csv")
 
-try:
-    df_inei = load_data()
-except Exception as e:
-    st.error(f"Error cargando el dataset: {e}")
-    df_inei = pd.DataFrame()
+df_inei = cargar_datos()
 
-# Sidebar configuration
-with st.sidebar:
-    st.header("⚙️ Parámetros de Simulación")
-    st.info("Ecosistema SmartWorld AI \n Módulo: Smart Study On Demand")
-    st.markdown("---")
-    st.subheader("Datos Base Disponibles:")
-    if not df_inei.empty:
-        st.dataframe(df_inei[['Anio', 'Mes', 'Distrito', 'Indicador', 'Valor']], height=300)
-    
-    st.markdown("---")
-    api_key_input = st.text_input("Ingresa tu OpenAI API Key (Opcional):", type="password")
+st.sidebar.markdown("### 📋 Datos Base Disponibles:")
+st.sidebar.dataframe(df_inei.head(15), height=300)
 
-# Main interface
-query_option = st.selectbox(
+# Campo de entrada de consulta por parte del usuario
+consulta_rapida = st.selectbox(
     "Selecciona una consulta rápida o escribe la tuya:",
     [
         "Elige una opción...",
         "Analizar la evolución del costo de la Canasta Básica Familiar en Lima Metropolitana.",
         "Comparar la Tasa de Empleo Formal entre San Luis y San Borja.",
-        "¿Cuál es la población estimada y situación de empleo en San Luis?"
+        "Mostrar indicadores de Pobreza y Población en Miraflores.",
+        "Resumen general de distritos con mayor vulnerabilidad."
     ]
 )
 
-user_prompt = st.text_area("O escribe tu consulta estadística personalizada:", value="" if query_option == "Elige una opción..." else query_option)
+consulta_personalizada = st.text_area(
+    "O escribe tu consulta estadística personalizada:",
+    value=consulta_rapida if consulta_rapida != "Elige una opción..." else ""
+)
 
-if st.button("Ejecutar Análisis Estadístico IA", type="primary"):
-    if not user_prompt:
-        st.warning("Por favor ingresa o selecciona una consulta.")
+api_key = st.sidebar.text_input("Ingresa tu OpenAI API Key (Opcional):", type="password")
+
+# Botón de ejecución
+if st.button("Ejecutar Análisis Estadístico IA"):
+    st.markdown("---")
+    st.markdown("### 📋 Resultados del Análisis Estadístico")
+    
+    # --- FILTRADO INTELIGENTE DE DATOS ---
+    consulta_lower = consulta_personalizada.lower()
+    
+    # Buscar distritos mencionados en el texto del usuario
+    distritos_encontrados = []
+    for distrito in df_inei['Distrito'].unique():
+        if distrito.lower() in consulta_lower:
+            distritos_encontrados.append(distrito)
+    
+    # Si se encontraron distritos específicos en la consulta, filtramos por ellos
+    if distritos_encontrados:
+        df_filtrado = df_inei[df_inei['Distrito'].isin(distritos_encontrados)]
+        st.success(f"🎯 Filtrado inteligente aplicado para: **{', '.join(distritos_encontrados)}**")
     else:
-        with st.spinner("Procesando datos institucionales con rigor estadístico..."):
-            
-            context_data = df_inei.to_string(index=False)
-            response_text = ""
-            
-            if api_key_input:
-                try:
-                    client = openai.OpenAI(api_key=api_key_input)
-                    system_prompt = """Eres el Asesor Estadístico Senior e Inteligencia Analítica del INEI (Instituto Nacional de Estadística e Informática del Perú). Tu propósito es asistir a investigadores y tomadores de decisiones interpretando con rigor técnico los datos oficiales proporcionados.
-                    REGLAS:
-                    1. BASES DE DATOS OFICIALES: Tus respuestas DEBEN basarse exclusivamente en la información del dataset proporcionado.
-                    2. RIGOR TÉCNICO: Utiliza terminología estadística formal.
-                    3. ESTRUCTURA:
-                       - Diagnóstico Rápido: Resumen directo del indicador.
-                       - Análisis de Tendencia: Contextualización del comportamiento.
-                       - Implicancia Práctica: Nota técnica para política pública."""
-                    
-                    completion = client.chat.completions.create(
-                        model="gpt-4o-mini",
-                        messages=[
-                            {"role": "system", "content": system_prompt},
-                            {"role": "user", "content": f"Dataset de referencia:\n{context_data}\n\nConsulta del usuario: {user_prompt}"}
-                        ]
-                    )
-                    response_text = completion.choices[0].message.content
-                except Exception as e:
-                    response_text = f"Error al conectar con la API: {e}. Mostrando análisis analítico interno del dataset:"
-            
-            if not api_key_input or "Error" in response_text:
-                response_text = f"""### 📈 Diagnóstico Rápido
-- **Indicador Analizado:** Consulta procesada sobre los registros oficiales del INEI.
-- **Datos institucionales de referencia registrados:**
-```
-{context_data}
-```
+        # Si no menciona un distrito específico, mostramos una muestra representativa o general
+        df_filtrado = df_inei.head(10)
+        st.info("ℹ️ Mostrando vista general de registros institucionales relacionados.")
 
-### 📊 Análisis de Tendencia Institucional
-Basado en los registros procesados para el periodo 2026, se observa estabilidad en los indicadores clave de Lima Metropolitana y distritos focales como San Luis. Los datos reflejan una correspondencia directa entre los costos de la canasta básica y las variables de empleo formal.
-
-### 🏛️ Implicancia Práctica para la Gestión Pública
-Este indicador es clave para la formulación de planes de desarrollo local y focalización de recursos socioeconómicos."""
-
-            st.markdown("### 📋 Resultados del Análisis Estadístico")
-            st.markdown(response_text)
-            
-            if "Empleo" in user_prompt or "Canasta" in user_prompt or "San Luis" in user_prompt:
-                st.markdown("---")
-                st.subheader("📊 Visualización Gráfica de Indicadores")
-                chart_subset = df_inei[['Distrito', 'Valor']].set_index('Distrito')
-                st.bar_chart(chart_subset)
+    st.markdown("#### 🔍 Diagnóstico Rápido")
+    st.markdown(f"- **Indicador Analizado:** {consulta_personalizada if consulta_personalizada else 'Consulta general procesada.'}")
+    st.markdown("- **Datos institucionales de referencia registrados:**")
+    
+    # Mostrar la tabla filtrada de manera limpia
+    st.dataframe(df_filtrado, use_container_width=True)
+    
+    st.success("✅ Análisis procesado con éxito bajo los parámetros y proyecciones del INEI.")
