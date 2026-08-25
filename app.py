@@ -35,15 +35,22 @@ df_inei = cargar_datos()
 st.sidebar.markdown("### 📋 Datos Base Disponibles:")
 st.sidebar.dataframe(df_inei.head(15), height=300)
 
+# --- NUEVO: SELECTOR DIRECTO DE DISTRITOS ---
+st.markdown("### 🎯 Selección de Distrito para Análisis")
+lista_distritos = sorted(df_inei['Distrito'].unique().tolist())
+distrito_seleccionado = st.selectbox(
+    "Selecciona un distrito específico de Lima Metropolitana:",
+    ["Todos los distritos"] + lista_distritos
+)
+
 # Campo de entrada de consulta por parte del usuario
 consulta_rapida = st.selectbox(
-    "Selecciona una consulta rápida o escribe la tuya:",
+    "O selecciona una consulta rápida:",
     [
         "Elige una opción...",
         "Analizar la evolución del costo de la Canasta Básica Familiar en Lima Metropolitana.",
-        "Comparar la Tasa de Empleo Formal entre San Luis y San Borja.",
-        "Mostrar indicadores de Pobreza y Población en Miraflores.",
-        "Resumen general de distritos con mayor vulnerabilidad."
+        "Comparar indicadores demográficos y de pobreza oficial.",
+        "Mostrar resumen de vulnerabilidad y empleo."
     ]
 )
 
@@ -59,27 +66,25 @@ if st.button("Ejecutar Análisis Estadístico IA"):
     st.markdown("---")
     st.markdown("### 📋 Resultados del Análisis Estadístico")
     
-    # --- FILTRADO INTELIGENTE DE DATOS ---
-    consulta_lower = consulta_personalizada.lower()
-    
-    # Buscar distritos mencionados en el texto del usuario
-    distritos_encontrados = []
-    for distrito in df_inei['Distrito'].unique():
-        if distrito.lower() in consulta_lower:
-            distritos_encontrados.append(distrito)
-    
-    # Si se encontraron distritos específicos en la consulta, filtramos por ellos
-    if distritos_encontrados:
-        df_filtrado = df_inei[df_inei['Distrito'].isin(distritos_encontrados)]
-        st.success(f"🎯 Filtrado inteligente aplicado para: **{', '.join(distritos_encontrados)}**")
+    # --- FILTRADO INTELIGENTE POR SELECTOR Y TEXTO ---
+    if distrito_seleccionado != "Todos los distritos":
+        df_filtrado = df_inei[df_inei['Distrito'] == distrito_seleccionado]
+        st.success(f"🎯 Análisis filtrado exclusivamente para el distrito de: **{distrito_seleccionado}**")
     else:
-        # Si no menciona un distrito específico, mostramos una muestra representativa o general
-        df_filtrado = df_inei.head(10)
-        st.info("ℹ️ Mostrando vista general de registros institucionales relacionados.")
+        # Buscar si en el texto de la consulta se menciona algún distrito (incluyendo Lince)
+        consulta_lower = consulta_personalizada.lower()
+        distritos_encontrados = [d for d in df_inei['Distrito'].unique() if d.lower() in consulta_lower]
+        
+        if distritos_encontrados:
+            df_filtrado = df_inei[df_inei['Distrito'].isin(distritos_encontrados)]
+            st.success(f"🎯 Filtrado inteligente aplicado para: **{', '.join(distritos_encontrados)}**")
+        else:
+            df_filtrado = df_inei
+            st.info("ℹ️ Mostrando el consolidado general de los distritos registrados.")
 
     st.markdown("#### 🔍 Diagnóstico Rápido")
-    st.markdown(f"- **Indicador Analizado:** {consulta_personalizada if consulta_personalizada else 'Consulta general procesada.'}")
-    st.markdown("- **Datos institucionales de referencia registrados:**")
+    st.markdown(f"- **Indicador / Consulta Analizada:** {consulta_personalizada if consulta_personalizada else f'Evaluación integral para {distrito_seleccionado}.'}")
+    st.markdown("- **Registros institucionales obtenidos:**")
     
     # Mostrar la tabla filtrada de manera limpia
     st.dataframe(df_filtrado, use_container_width=True)
