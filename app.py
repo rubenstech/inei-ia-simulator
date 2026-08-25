@@ -35,14 +35,14 @@ df_inei = cargar_datos()
 st.sidebar.markdown("### 📋 Datos Base Disponibles:")
 st.sidebar.dataframe(df_inei.head(15), height=300)
 
-# --- NUEVO: SELECTOR MÚLTIPLE PARA COMPARACIÓN DE DISTRITOS ---
+# Selector múltiple para comparación de distritos
 st.markdown("### 🎯 Comparativa Multi-Distrito")
 lista_distritos = sorted([d for d in df_inei['Distrito'].unique() if d != "Lima (Promedio)"])
 
 distritos_seleccionados = st.multiselect(
     "Selecciona dos o más distritos para comparar:",
     options=lista_distritos,
-    default=["San Luis", "San Borja", "Miraflores"]  # Selección inicial por defecto para que luzca lleno al cargar
+    default=["San Luis", "San Borja", "Miraflores", "Lince"]
 )
 
 consulta_rapida = st.selectbox(
@@ -67,14 +67,13 @@ if st.button("Ejecutar Análisis Estadístico IA"):
     st.markdown("---")
     st.markdown("### 📋 Resultados del Análisis Estadístico")
     
-    # Filtrar según los distritos seleccionados en el multiselect
+    # Filtrar según los distritos seleccionados
     if distritos_seleccionados:
         df_filtrado = df_inei[df_inei['Distrito'].isin(distritos_seleccionados)]
         st.success(f"🎯 Comparativa activa para los distritos: **{', '.join(distritos_seleccionados)}**")
     else:
-        # Si no elige ninguno, toma por defecto un par o todo el general
         df_filtrado = df_inei[df_inei['Distrito'].isin(["San Luis", "San Borja"])]
-        st.warning("⚠️ No seleccionaste ningún distrito. Mostrando comparación predeterminada (San Luis y San Borja).")
+        st.warning("⚠️ No seleccionaste ningún distrito. Mostrando comparación predeterminada.")
 
     st.markdown("#### 🔍 Diagnóstico Rápido")
     st.markdown(f"- **Indicador / Consulta Analizada:** {consulta_personalizada if consulta_personalizada else 'Evaluación comparativa multi-distrito.'}")
@@ -83,14 +82,24 @@ if st.button("Ejecutar Análisis Estadístico IA"):
     # Mostrar la tabla filtrada
     st.dataframe(df_filtrado, use_container_width=True)
     
-    # --- GRÁFICOS COMPARATIVOS AVANZADOS ---
-    st.markdown("#### 📈 Visualización Comparativa de Indicadores")
+    # --- VISUALIZACIÓN GRÁFICA MULTI-INDICADOR PROFESIONAL ---
+    st.markdown("#### 📈 Visualización Comparativa por Indicador")
+    
     if not df_filtrado.empty:
         try:
-            # Transformamos los datos en una tabla cruzada (pivote) para que el gráfico de barras compare perfectamente por indicador
+            # Creamos una tabla pivote donde las columnas sean los indicadores y las filas los distritos
             df_pivot = df_filtrado.pivot(index='Distrito', columns='Indicador', values='Valor')
-            st.bar_chart(df_pivot)
-        except Exception:
+            
+            # Mostramos un gráfico limpio para cada indicador clave para evitar el problema de escalas distintas
+            indicadores = df_pivot.columns.tolist()
+            
+            for ind in indicadores:
+                st.markdown(f"**📊 Métrica: {ind.replace('_', ' ').title()}**")
+                # Graficamos cada indicador de forma individual y perfectamente escalada
+                st.bar_chart(df_pivot[[ind]])
+                
+        except Exception as e:
+            st.info("Mostrando vista general de gráficos consolidados:")
             st.bar_chart(df_filtrado.set_index('Distrito')['Valor'])
     
     st.success("✅ Análisis procesado con éxito bajo los parámetros y proyecciones del INEI.")
