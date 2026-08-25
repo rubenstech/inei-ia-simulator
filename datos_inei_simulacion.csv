@@ -1,0 +1,8 @@
+Anio,Mes,Departamento,Provincia,Distrito,Indicador,Categoria,Valor,Unidad_Medida,Fuente_Oficial
+2026,1,Lima,Lima,San Luis,Población Estimada,Demografía,54200,Habitantes,INEI - Censo Nacional / Proyecciones
+2026,1,Lima,Lima,Lima (Promedio),Inflación Mensual,Economía,"0,35",Porcentaje (%),INEI - IPC Lima Metropolitana
+2026,1,Lima,Lima,Lima (Promedio),Costo Canasta Básica Familiar,Economía,1650.50,Soles (S/.),INEI - ENAHO / Canasta Básica
+2026,1,Lima,Lima,San Luis,Tasa de Empleo Formal,Empleo,"68,4",Porcentaje (%),INEI - ENAHO
+2026,2,Lima,Lima,Lima (Promedio),Inflación Mensual,Economía,"0,28",Porcentaje (%),INEI - IPC Lima Metropolitana
+2026,2,Lima,Lima,Lima (Promedio),Costo Canasta Básica Familiar,Economía,1662.00,Soles (S/.),INEI - ENAHO / Canasta Básica
+2026,2,Lima,Lima,San Luis,Tasa de Empleo Formal,Empleo,"69,1",Porcentaje (%),INEI - ENAHO
